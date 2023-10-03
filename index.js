@@ -1,14 +1,19 @@
 const mysql = require('mysql');
+const ejs = require('ejs');
 const express = require('express');
 const studentRouter = require('./routes/students-routes.js');
 const connection = require('./model/connection.js');
 
 
 const app = express();
+
+app.set('view engine', 'ejs');
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/', studentRouter);
+
 
 
 connection.connect(err => {

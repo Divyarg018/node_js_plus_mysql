@@ -27,7 +27,7 @@ module.exports.getStudent = (req, res) =>{
         let sql = "SELECT * FROM STUDENTS";
         connection.query(sql, (err, result)=>{
             if(err ) return console.log(err);
-            res.render(__dirname+"/student", {student:result});
+            res.render("student", {student: result});
            
         })
 
@@ -50,7 +50,7 @@ module.exports.updateStudents = (req, res)=>{
     connection.query(sql, [id], (err, result)=>{
        
         if(err ) return console.log(err);
-      res.render(__dirname+"/update-student", {student:result});
+      res.render("update-student", {student: result});
        
     })
 }
@@ -66,6 +66,26 @@ module.exports.updateStudentsDetails = (req, res)=>{
         if(err ) return console.log(err);
       res.redirect('/student');
        
+    })
+}
+
+module.exports.searchStudents= (req, res)=>{
+    let sql = "SELECT * FROM STUDENTS";
+    connection.query(sql, (err, result)=>{
+        if(err ) return console.log(err);
+        res.render("search-students", {student: result});
+       
+    });
+};
+
+module.exports.searchStudentsDetails =(req, res)=>{
+    let name = req.query.name;
+    let email = req.query.email;
+    let mobile = req.query.mobile;
+    let sql = "SELECT * FROM STUDENTS WHERE NAME LIKE '%"+name+"%'AND EMAIL LIKE '%"+email+"%' AND MOBILE LIKE '%"+mobile+"%'";
+    connection.query(sql, (err, result)=>{
+        if(err)console.log(err);
+        res.render("search-students", {student: result});
     })
 }
 
